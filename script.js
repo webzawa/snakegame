@@ -22,7 +22,6 @@ function main() {
     snake.unshift(newHead);
 
     if (newHead.x === food.x && newHead.y === food.y) {
-      snake.push({ ...snake[snake.length - 1] });
       score++;
       food = generateFood();
     } else {
