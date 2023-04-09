@@ -5,15 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>スネークゲーム</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous" />
   </head>
+
   <body>
-    <canvas id="gameBoard" width="400" height="400"></canvas>
-    <div class="controls">
-      <button class="arrowBtn" id="upBtn">↑</button>
-      <button class="arrowBtn" id="leftBtn">←</button>
-      <button class="arrowBtn" id="rightBtn">→</button>
-      <button class="arrowBtn" id="downBtn">↓</button>
+    <div
+      class="container d-flex flex-column align-items-center"
+      style="height: 100vh;">
+      <canvas id="gameBoard" width="400" height="400" class="mb-4"></canvas>
+      <div class="controls d-flex flex-column">
+        <div class="controls-row d-flex">
+          <div class="col"></div>
+          <button class="arrowBtn col" id="upBtn">↑</button>
+          <div class="col"></div>
+        </div>
+        <div class="controls-row d-flex">
+          <button class="arrowBtn col" id="leftBtn">←</button>
+          <div class="col"></div>
+          <button class="arrowBtn col" id="rightBtn">→</button>
+        </div>
+        <div class="controls-row d-flex">
+          <div class="col"></div>
+          <button class="arrowBtn col" id="downBtn">↓</button>
+          <div class="col"></div>
+        </div>
+      </div>
     </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
     <script src="script.js"></script>
   </body>
 </html>
