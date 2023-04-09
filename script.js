@@ -1,5 +1,6 @@
 const canvas = document.getElementById('gameBoard');
 const ctx = canvas.getContext('2d');
+const FPS = 10;
 
 const gridSize = 20;
 const tileSize = canvas.width / gridSize;
@@ -7,11 +8,30 @@ const tileSize = canvas.width / gridSize;
 let snake = [{ x: gridSize / 2, y: gridSize / 2 }];
 let direction = { x: 0, y: 0 };
 let food = generateFood();
+let score = 0;
 
 function main() {
-  update();
+  const newHead = {
+    x: snake[0].x + direction.x,
+    y: snake[0].y + direction.y,
+  };
+
+  if (isCollision(newHead) || isOutOfBounds(newHead)) {
+    resetGame();
+  } else {
+    snake.unshift(newHead);
+
+    if (newHead.x === food.x && newHead.y === food.y) {
+      snake.push({ ...snake[snake.length - 1] });
+      score++;
+      food = generateFood();
+    } else {
+      snake.pop();
+    }
+  }
+
   draw();
-  setTimeout(main, 100);
+  setTimeout(main, 1000 / FPS);
 }
 
 function update() {
@@ -44,6 +64,9 @@ function draw() {
 
   ctx.fillStyle = 'red';
   ctx.fillRect(food.x * tileSize, food.y * tileSize, tileSize, tileSize);
+
+  // スコア表示を更新
+  document.getElementById('score').innerText = `スコア: ${score}`;
 }
 
 function generateFood() {
@@ -73,6 +96,7 @@ function resetGame() {
   snake = [{ x: gridSize / 2, y: gridSize / 2 }];
   direction = { x: 0, y: 0 };
   food = generateFood();
+  score = 0;
 }
 
 document.addEventListener('keydown', (event) => {
