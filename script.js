@@ -89,4 +89,28 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+document.getElementById('upBtn').addEventListener('click', () => {
+  if (direction.y === 0) {
+    direction = { x: 0, y: -1 };
+  }
+});
+
+document.getElementById('downBtn').addEventListener('click', () => {
+  if (direction.y === 0) {
+    direction = { x: 0, y: 1 };
+  }
+});
+
+document.getElementById('leftBtn').addEventListener('click', () => {
+  if (direction.x === 0) {
+    direction = { x: -1, y: 0 };
+  }
+});
+
+document.getElementById('rightBtn').addEventListener('click', () => {
+  if (direction.x === 0) {
+    direction = { x: 1, y: 0 };
+  }
+});
+
 main();

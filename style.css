@@ -11,3 +11,31 @@ body {
 canvas {
   border: 1px solid #fff;
 }
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 150px;
+  margin: 20px auto;
+}
+
+.arrowBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 24px;
+  margin: 5px;
+  outline: none;
+  cursor: pointer;
+}
+
+.arrowBtn:active {
+  background-color: #666;
+}
