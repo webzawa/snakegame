@@ -17,7 +17,8 @@ function main() {
   };
 
   if (isCollision(newHead) || isOutOfBounds(newHead)) {
-    resetGame();
+    showGameOver();
+    return;
   } else {
     snake.unshift(newHead);
 
@@ -31,25 +32,6 @@ function main() {
 
   draw();
   setTimeout(main, 1000 / FPS);
-}
-
-function update() {
-  const newHead = {
-    x: snake[0].x + direction.x,
-    y: snake[0].y + direction.y,
-  };
-
-  if (isCollision(newHead) || isOutOfBounds(newHead)) {
-    resetGame();
-  } else {
-    snake.unshift(newHead);
-
-    if (newHead.x === food.x && newHead.y === food.y) {
-      food = generateFood();
-    } else {
-      snake.pop();
-    }
-  }
 }
 
 function draw() {
@@ -66,6 +48,11 @@ function draw() {
 
   // スコア表示を更新
   document.getElementById('score').innerText = `スコア: ${score}`;
+
+  if (isCollision(snake[0]) || isOutOfBounds(snake[0])) {
+    showGameOver();
+    return;
+  }
 }
 
 function generateFood() {
@@ -80,7 +67,12 @@ function generateFood() {
 }
 
 function isCollision(position) {
-  return snake.some((segment) => segment.x === position.x && segment.y === position.y);
+  for (let i = 1; i < snake.length; i++) {
+    if (snake[i].x === position.x && snake[i].y === position.y) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function isOutOfBounds(position) {
@@ -91,11 +83,20 @@ function isOccupied(position) {
   return snake.some((segment) => segment.x === position.x && segment.y === position.y);
 }
 
+function showGameOver() {
+  document.getElementById('gameOver').style.display = 'flex';
+}
+
+function hideGameOver() {
+  document.getElementById('gameOver').style.display = 'none';
+}
+
 function resetGame() {
   snake = [{ x: gridSize / 2, y: gridSize / 2 }];
   direction = { x: 0, y: 0 };
   food = generateFood();
   score = 0;
+  hideGameOver(); // この行を追加
 }
 
 document.addEventListener('keydown', (event) => {
@@ -136,4 +137,10 @@ document.getElementById('rightBtn').addEventListener('click', () => {
   }
 });
 
+document.getElementById('continueBtn').addEventListener('click', () => {
+  resetGame();
+  main();
+});
+
+hideGameOver();
 main();
