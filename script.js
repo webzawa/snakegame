@@ -9,6 +9,11 @@ let snake = [{ x: gridSize / 2, y: gridSize / 2 }];
 let direction = { x: 0, y: 0 };
 let food = generateFood();
 let score = 0;
+// ハイスコアを取得
+let highScore = localStorage.getItem('highScore') || 0;
+document.getElementById('highScore').innerText = `ハイスコア: ${highScore}`;
+// スコアを記録するための配列
+let scoreHistory = JSON.parse(localStorage.getItem('scoreHistory')) || [];
 
 function main() {
   const newHead = {
@@ -24,6 +29,11 @@ function main() {
 
     if (newHead.x === food.x && newHead.y === food.y) {
       score++;
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('highScore', highScore);
+        document.getElementById('highScore').innerText = `ハイスコア: ${highScore}`;
+      }
       food = generateFood();
     } else {
       snake.pop();
@@ -85,6 +95,11 @@ function isOccupied(position) {
 
 function showGameOver() {
   document.getElementById('gameOver').style.display = 'flex';
+  // ゲームオーバー時にスコアを記録
+  scoreHistory.push(score);
+  localStorage.setItem('scoreHistory', JSON.stringify(scoreHistory));
+  // ゲームオーバー時にスコアを表示
+  document.getElementById('gameOverScore').innerText = `スコア: ${score}`;
 }
 
 function hideGameOver() {
@@ -140,6 +155,18 @@ document.getElementById('rightBtn').addEventListener('click', () => {
 document.getElementById('continueBtn').addEventListener('click', () => {
   resetGame();
   main();
+});
+
+document.getElementById('scoreResultsModal').addEventListener('show.bs.modal', () => {
+  const scoreResultsList = document.getElementById('scoreResults');
+  scoreResultsList.innerHTML = '';
+
+  scoreHistory.forEach((score, index) => {
+    const li = document.createElement('li');
+    li.className = 'list-group-item';
+    li.innerText = `ゲーム ${index + 1}: ${score}`;
+    scoreResultsList.appendChild(li);
+  });
 });
 
 hideGameOver();
